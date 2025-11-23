@@ -2,21 +2,26 @@ import random
 import arcade
 import numpy as np
 
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 500
+HEIGHT = 300
 
-particleSize=20
-epsilon=0.2*100 # Force maximum
+particleSize=5
+epsilon=50 # Force maximum
 sigma=5 # Static distance
-numParticles=100
+numParticles=200
 
 maxVel=100
 
+tooCloseDistance=5
+
 randomVels=True
-iniVel=1
+iniVel=10
+
+forceLimiter=False
+maxForce=epsilon/4
 
 class Particle:
-    def __init__(self,x,y,mass=0.8*10,vx=0,vy=0):
+    def __init__(self,x,y,mass=0.01,vx=0,vy=0):
         self.x=x
         self.y=y
         if randomVels:
@@ -42,12 +47,12 @@ class Particle:
         #fx-=self.vx*mu
         #fy-=self.vy*mu
 
-        self.ax=self.fx/self.m
+        self.ax=self.SaturateValues(self.fx,[-maxForce,maxForce])/self.m
         self.vx+=self.ax*dt
         self.vx=self.SaturateValues(self.vx)
         self.x+=self.vx*dt
 
-        self.ay=self.fy/self.m
+        self.ay=self.SaturateValues(self.fy,[-maxForce,maxForce])/self.m
         self.vy+=self.ay*dt
         self.vy=self.SaturateValues(self.vy)
         self.y+=self.vy*dt
@@ -67,7 +72,7 @@ def CalculateForces(p1,p2):
     d=np.sqrt((dx**2)+(dy**2))
     if dx==0: dx=0.0001
     if dy==0: dy=0.0001
-    F=(24*epsilon/(d**2))*(((sigma/d)**6)-(2*((sigma/d)**12)))
+    F=max((24*epsilon/(d**2))*(((sigma/d)**6)-(2*((sigma/d)**12))),-maxForce)
 
     return F*dx/d,F*dy/d
 
@@ -86,7 +91,7 @@ class MySimulation(arcade.Window):
                     dx=x-other.x
                     dy=y-other.y
                     d=np.sqrt((dx**2)+(dy**2))
-                    if d<particleSize*4:
+                    if d<tooCloseDistance:
                         tooClose=True
                         break
                 if not tooClose:
