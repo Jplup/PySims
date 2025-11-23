@@ -97,6 +97,8 @@ def CalculateSimulation(finalTime,dt,numParticles,mass,E,S,rVels):
                 break
 
     time=np.linspace(0,finalTime,int(finalTime/dt))
+    goals=[10,25,50,75,90]
+    printGoal=[True for _ in goals]
     for k in range(int(finalTime/dt)):
         for i in range(numParticles):
             for j in range(numParticles-1-i):
@@ -117,7 +119,11 @@ def CalculateSimulation(finalTime,dt,numParticles,mass,E,S,rVels):
             p.fx+=Fx
             p.fy+=Fy
         for p in particles: p.update(dt)
-        print("  ",round((100*k)/(int(finalTime/dt)),2),"%")
+        percet=round((100*k)/(int(finalTime/dt)),2)
+        for aux,goal in enumerate(goals):
+            if percet>goal and printGoal[aux]: 
+                print("  ",percet,"%")
+                printGoal[aux]=False
     particlePositions=[[p.xs,p.ys] for p in particles]
     return particlePositions,time
 
@@ -147,10 +153,10 @@ class MySimulation(arcade.Window):
 
 Es=[0.2,2,20,200]
 Ss=[4,8]
-Ns=[500]
+Ns=[300]
 Ms=[0.001,0.01,0.1,1,10]
-Ts=[20]
-DTs=[1/30,1/60]
+Ts=[10]
+DTs=[1/60]
 
 totalNum=len(Es)*len(Ss)*len(Ms)*len(Ns)*len(Ts)*len(DTs)*2
 
@@ -176,12 +182,12 @@ for E in Es:
                             t0=time.time()
                             with open("sims.json") as fs: data=json.load(fs)
 
-                            key="E="+str(E)+"/"
-                            key+="S="+str(S)+"/"
-                            key+="N="+str(N)+"/"
-                            key+="M="+str(M)+"/"
-                            key+="T="+str(T)+"/"
-                            key+="DT="+str(DT)+"/"
+                            key="E="+str(E)+"+"
+                            key+="S="+str(S)+"+"
+                            key+="N="+str(N)+"+"
+                            key+="M="+str(M)+"+"
+                            key+="T="+str(T)+"+"
+                            key+="DT="+str(DT)+"+"
                             key+="rV="+str(rVels)
 
                             try: values=data[key]
@@ -189,7 +195,7 @@ for E in Es:
                                 p,t=CalculateSimulation(T,DT,N,M,E,S,rVels)
                                 data[key]=1
                                 with open("sims.json",'w') as fs: json.dump(data,fs)
-                                with open(key+".json",'w') as fs: json.dump({"data":[p,t]})
+                                with open("data/"+key+".json",'w') as fs: json.dump({"data":[p,list(t)]},fs)
 
                             percent=round((100*cont)/totalNum,4)
                             timeToFinish=dt*(totalNum-cont)
