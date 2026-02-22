@@ -1,0 +1,34 @@
+E=0.2+S=4+N=300+M=0.001+T=10+DT=0.0125+rV=False.json
+
+E=0.2+S=8+N=300+M=0.01+T=10+DT=0.016666666666666666+rV=False.json  com menos energia total
+
+E=2+S=4+N=300+M=0.01+T=10+DT=0.0125+rV=True.json Best so far
+
+E=2+S=8+N=300+M=0.001+T=10+DT=0.0125+rV=False.json  Very very good
+
+E=20+S=8+N=300+M=0.01+T=10+DT=0.0125+rV=False.json
+
+E=20+S=8+N=300+M=0.1+T=10+DT=0.016666666666666666+rV=False.json
+
+With vellimiter:
+
+E=2+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=10.json 
+E=2+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=30.json
+E=2+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=5.json
+E=2+S=5+N=200+M=0.01+T=20+DT=0.0125+rV=True+MV=10.json  maybe for longer sims
+E=2+S=5+N=200+M=0.01+T=20+DT=0.0125+rV=True+MV=5.json
+E=20+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=10.json
+E=20+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=30.json
+E=20+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=5.json
+E=20+S=5+N=200+M=0.01+T=20+DT=0.0125+rV=True+MV=30.json
+E=20+S=5+N=200+M=0.1+T=20+DT=0.0125+rV=True+MV=10.json
+E=20+S=5+N=200+M=0.1+T=20+DT=0.0125+rV=True+MV=5.json
+E=200+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=10.json  static
+E=200+S=5+N=200+M=0.001+T=20+DT=0.0125+rV=True+MV=30.json  woble static
+E=200+S=5+N=200+M=0.1+T=20+DT=0.0125+rV=True+MV=10.json
+
+
+
+
+
+

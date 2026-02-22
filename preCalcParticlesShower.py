@@ -7,7 +7,7 @@ WIDTH = 400
 HEIGHT = 300
 
 particleSize=2
-playbackSpeed=10
+playbackSpeed=5
 
 
 class MySimulation(arcade.Window):
@@ -28,15 +28,15 @@ class MySimulation(arcade.Window):
         self.currentTime+=delta_time*playbackSpeed
         if self.currentTime>self.ft: self.currentTime=0
 
-#last="E=20+S=8+N=300+M=0.01+T=10+DT=0.0125+rV=False.json"
+last="E=200+S=5+N=200+M=0.1+T=20+DT=0.0125+rV=True+MV=10.json"
 
-show=True
+show=False
 
 for filename in os.listdir("data"):
     rV=filename.split("+")[-1].split("=")[1].split(".")[0]
     if rV=="True": continue
     print(filename)
-    #if filename==last: show=True
+    if filename==last: show=True
     if show:
         with open("data/"+filename) as fs: data=json.load(fs)["data"]
         window = MySimulation(data[0],data[1])
